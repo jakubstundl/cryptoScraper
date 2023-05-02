@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   
+    td,th {
+        @apply pr-[30px];
+      }
+}
