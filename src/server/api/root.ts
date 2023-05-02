@@ -1,5 +1,5 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { scrapingRouter } from "~/server/api/routers/default";
+import { coinCodexRouter } from "./routers/coinCodexRouter";
 
 /**
  * This is the primary router for your server.
@@ -7,7 +7,7 @@ import { scrapingRouter } from "~/server/api/routers/default";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  defaultRouter: scrapingRouter,
+  coinCodexRouter: coinCodexRouter,
 });
 
 // export type definition of API

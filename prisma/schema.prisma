@@ -11,7 +11,7 @@ model coinCodexPrediction {
   name   String  @id @unique
   time   Float?
   bought Float?
-  d      String? @db.Text
-  v      String? @db.Text
-  p      String? @db.Text
+  days      String? @db.Text
+  values      String? @db.Text
+  percentages      String? @db.Text
 }
