@@ -19,7 +19,13 @@ export const scrapeCoinCodexPRedictions = async (
   url: string
 ): Promise<Map<string, string>> => {
   return new Promise<Map<string, string>>(async (resolve, reject) => {
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome',headless: "new",
+    args: [
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+    ] });
     const page: puppeteer.Page = await browser.newPage();
     await page.goto(url);
     let map = new Map<string, string>();

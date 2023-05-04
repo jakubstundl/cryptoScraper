@@ -7,7 +7,9 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start:1-db": "prisma generate",
+    "start:2-server": "next start",
+    "start": "prisma generate && next start"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
