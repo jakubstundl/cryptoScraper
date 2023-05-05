@@ -3,7 +3,7 @@ services:
   server:
     build: .
     ports:
-      - "3000:3000"
+      - "3000:1805"
     depends_on:
       - database 
     networks:

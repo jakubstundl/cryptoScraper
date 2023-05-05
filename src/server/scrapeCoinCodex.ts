@@ -19,7 +19,8 @@ export const scrapeCoinCodexPRedictions = async (
   url: string
 ): Promise<Map<string, string>> => {
   return new Promise<Map<string, string>>(async (resolve, reject) => {
-    const browser = await puppeteer.launch({ executablePath: '/usr/bin/chromium',headless: "new",
+     try {
+    const browser = await puppeteer.launch({ executablePath: process.env.browserPath,headless: "new",
     args: [
         "--disable-gpu",
         "--disable-dev-shm-usage",
@@ -29,7 +30,7 @@ export const scrapeCoinCodexPRedictions = async (
     const page: puppeteer.Page = await browser.newPage();
     await page.goto(url);
     let map = new Map<string, string>();
-    try {
+   
       const name = await getDataFromElement(nameSelector, page);
       if (name) {
         map.set("name", name);
@@ -62,6 +63,7 @@ export const scrapeCoinCodexPRedictions = async (
         reject();
       }
     } catch (error) {
+      console.log("Couldnt scrape")
       reject();
     }
   });

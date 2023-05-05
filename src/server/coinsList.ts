@@ -1,32 +1,3 @@
-export const coinShort: string[] = [
-  "ETH",
-  "WOO",
-  "ALPHA",
-  "DOGE",
-  "SOL",
-  "XRP",
-  "LINA",
-  "IDEX",
-  "LTC",
-  "RNDR",
-  "ADA",
-  "SHIB",
-  "DOT",
-  "ATOM",
-  "TRX",
-  "AVAX",
-  "RLC",
-  "APT",
-  "INJ",
-  "LINK",
-  "MATIC",
-  "ICP",
-  "FIL",
-  "DASH",
-  "WETH",
-  "ALPINE",
-];
-
 export const coinPredictions: Map<string, string> = new Map<string, string>();
 coinPredictions.set(
   "ETH",
@@ -132,3 +103,99 @@ coinPredictions.set(
   "ALPINE",
   "https://coincodex.com/crypto/alpine-f1-team-fan-token/price-prediction"
 );
+coinPredictions.set(
+  "RAD",
+  "https://coincodex.com/crypto/radicle/price-prediction/"
+);
+coinPredictions.set(
+  "BNB",
+  "https://coincodex.com/crypto/binance-coin/price-prediction/"
+);
+coinPredictions.set(
+  "UMA",
+  "https://coincodex.com/crypto/uma/price-prediction/"
+);
+coinPredictions.set(
+  "AERGO",
+  "https://coincodex.com/crypto/aergo/price-prediction/"
+);
+coinPredictions.set(
+  "LUNC",
+  "https://coincodex.com/crypto/terra/price-prediction/"
+);
+coinPredictions.set(
+  "FTT",
+  "https://coincodex.com/crypto/ftx-token/price-prediction/"
+);
+coinPredictions.set(
+  "OP",
+  "https://coincodex.com/crypto/optimism/price-prediction/"
+);
+coinPredictions.set(
+  "CFX",
+  "https://coincodex.com/crypto/conflux-network/price-prediction/"
+);
+coinPredictions.set(
+  "JASMY",
+  "https://coincodex.com/crypto/jasmy/price-prediction/"
+);
+coinPredictions.set(
+  "GALA",
+  "https://coincodex.com/crypto/gala/price-prediction/"
+);
+coinPredictions.set(
+  "LINK",
+  "https://coincodex.com/crypto/chainlink/price-prediction/"
+);
+coinPredictions.set(
+  "FTM",
+  "https://coincodex.com/crypto/fantom/price-prediction/"
+);
+coinPredictions.set(
+  "BETA",
+  "https://coincodex.com/crypto/beta-finance/price-prediction/"
+);
+coinPredictions.set(
+  "AVAX",
+  "https://coincodex.com/crypto/avalanche/price-prediction/"
+);
+coinPredictions.set(
+  "FIL",
+  "https://coincodex.com/crypto/filecoin/price-prediction/"
+);
+coinPredictions.set(
+  "LDO",
+  "https://coincodex.com/crypto/lido-dao/price-prediction/"
+);
+coinPredictions.set(
+  "CAKE",
+  "https://coincodex.com/crypto/pancakeswap/price-prediction/"
+);
+coinPredictions.set(
+  "WIN",
+  "https://coincodex.com/crypto/wintoken/price-prediction/"
+);
+coinPredictions.set(
+  "COCOS",
+  "https://coincodex.com/crypto/cocos-bcx/price-prediction/"
+);
+coinPredictions.set(
+  "UNI",
+  "https://coincodex.com/crypto/uniswap/price-prediction/"
+);
+coinPredictions.set(
+  "XLM",
+  "https://coincodex.com/crypto/stellar/price-prediction/"
+);
+coinPredictions.set(
+  "XMR",
+  "https://coincodex.com/crypto/monero/price-prediction/"
+);
+
+export const coinShort = (): string[] => {
+  const temp: string[] = [];
+  coinPredictions.forEach((v, k) => {
+    temp.push(k);
+  });
+  return temp;
+};
