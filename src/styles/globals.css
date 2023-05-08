@@ -7,4 +7,13 @@
     td,th {
         @apply pr-[30px];
       }
+      label {
+        @apply text-black;
+      }
+      input {
+        @apply text-black border-[3px] border-black w-[200px];
+      
+
+
+      }
 }

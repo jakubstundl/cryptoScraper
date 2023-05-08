@@ -10,8 +10,17 @@ datasource db {
 model coinCodexPrediction {
   name   String  @id @unique
   time   Float?
-  bought Float?
   days      String? @db.Text
   values      String? @db.Text
   percentages      String? @db.Text
+}
+
+
+model coinTradeData {
+  name   String  @id @unique
+  count Float?
+  boughtFor Float?
+  boughtAt Float?
+  sellAt Float?
+  
 }

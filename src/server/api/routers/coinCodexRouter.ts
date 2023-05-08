@@ -3,15 +3,15 @@ import { prisma } from "~/server/db";
 import { scrapeCoinCodexPRedictions } from "~/server/scrapeCoinCodex";
 import { coinPredictions, coinShort } from "~/server/coinsList";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { type coinCodexPrediction } from "@prisma/client";
-import { log } from "console";
+import { coinTradeData, type coinCodexPrediction } from "@prisma/client";
 
 export const coinCodexRouter = createTRPCRouter({
-  getShortsAndUrls: publicProcedure.query(async () => {
+  getInitialData: publicProcedure.query(async () => {
     return {
       coinShort: coinShort(),
       url: coinPredictions,
       availableCoins: await getAvailableCoins(),
+      coinTradeData: await getCoinTradeData(),
     };
   }),
 
@@ -54,6 +54,43 @@ export const coinCodexRouter = createTRPCRouter({
       console.log(coin," upsert");      
     }
   }),
+  updateTradeData: publicProcedure
+    .input(z.object({ name:z.string(),count:z.number(),
+      boughtFor:z.number(),
+      boughtAt:z.number(),
+      sellAt:z.number(),
+    }))
+    .mutation(async ({ input }) => {
+      
+      try {
+        await prisma.coinTradeData.upsert({
+          where: {
+            name: input.name,
+          },
+          update: { count:input.count },
+          create: {
+            name: input.name,
+            count:input.count,
+            boughtFor:input.boughtFor,
+            boughtAt:input.boughtAt,
+            sellAt:input.sellAt
+          },
+        });
+
+        await prisma.coinTradeData.update({where:{name:input.name}, data:{
+          count:input.count,
+          boughtFor:input.boughtFor,
+          boughtAt:input.boughtAt,
+          sellAt:input.sellAt
+  
+        }})
+      } catch (error) {
+        console.log("Unable to update trade data");
+      }
+      return await prisma.coinTradeData.findUnique({
+        where: { name: input.name },
+      });
+    }),
 });
 
 export const upsertDbAndReturn = async (
@@ -124,5 +161,23 @@ const getAvailableCoins = async () => {
     return map;
   } catch (error) {
     console.log("Couldnt get available coins");
+  }
+};
+
+
+const getCoinTradeData = async () => {
+  try {
+    const map = new Map<string, coinTradeData>();
+    for (const coin of coinShort()) {
+      const dataFromDb = await prisma.coinTradeData.findUnique({
+        where: { name: coin },
+      });
+      if (dataFromDb) {
+        map.set(coin, dataFromDb);
+      }
+    }
+    return map;
+  } catch (error) {
+    console.log("Couldnt get coinTradeData");
   }
 };
