@@ -3,27 +3,11 @@ services:
   server:
     build: .
     ports:
-      - "3000:1805"
-    depends_on:
-      - database 
-    networks:
-      - dockerNetwork
-     
-  database:
-    build: ./dockerDatabase
-    networks:
-      - dockerNetwork
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: cryptoScraper
+      - "18050:3000"
     
-  kali:
-    build: ./kali
-    volumes:
-      - ./kali:/home
     networks:
       - dockerNetwork
-  
+         
 networks:
   dockerNetwork:
     name: dockerNetwork

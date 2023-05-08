@@ -1,6 +1,5 @@
 FROM node:slim
 
-ENV DATABASE_URL="mysql://root:password@database:3306/cryptoScraper"
 ENV browserPath="/usr/bin/chromium"
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN apt update
