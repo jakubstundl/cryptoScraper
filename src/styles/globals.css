@@ -8,12 +8,16 @@
         @apply pr-[30px];
       }
       label {
-        @apply text-black;
+        @apply text-white w-[200px] text-center;
       }
       input {
-        @apply text-black border-[3px] border-black w-[200px];
+        @apply text-black border-[3px] border-black w-[100px] text-center;
+      }
       
-
-
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        
       }
 }

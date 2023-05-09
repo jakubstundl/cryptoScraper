@@ -1,11 +1,11 @@
 export const coinPredictions: Map<string, string> = new Map<string, string>();
 coinPredictions.set(
   "ETH",
-  "https://coincodex.com/crypto/bitcoin/price-prediction/"
-);
-coinPredictions.set(
-  "BTC",
   "https://coincodex.com/crypto/ethereum/price-prediction/"
+  );
+  coinPredictions.set(
+    "BTC",
+    "https://coincodex.com/crypto/bitcoin/price-prediction/"
 );
 coinPredictions.set(
   "WOO",

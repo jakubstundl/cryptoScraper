@@ -96,7 +96,6 @@ const Home: NextPage<Iprops> = (props) => {
                       .map((day: string) => <th key={day}>{day}</th>)
                   : "-"}
               </tr>
-
               {initialData.data?.coinShort
                 .sort((a, b) => {
                   return (
@@ -105,7 +104,35 @@ const Home: NextPage<Iprops> = (props) => {
                   );
                 })
                 .map((coin) => (
-                  <tr key={coin}>
+                  <tr
+                    key={coin}
+                    className="bg-transparent"
+                    onMouseEnter={(e) => {
+                      const row: HTMLTableRowElement = e.currentTarget;
+                      if (row.classList.contains("bg-transparent")) {
+                        row.className =
+                          "bg-gradient-to-b from-[#2e026d] to-[#15162c]";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      const row: HTMLTableRowElement = e.currentTarget;
+                      if (row.classList.contains("to-[#15162c]")) {
+                        row.className = "bg-transparent";
+                      }
+                    }}
+                    onClick={(e) => {
+                      const row: HTMLTableRowElement = e.currentTarget;
+                      const element = e.target as HTMLElement;
+                      if (element.tagName.toLowerCase() != "button") {
+                        if (row.classList.contains("to-[black]")) {
+                          row.className = "bg-transparent";
+                        } else {
+                          row.className =
+                            "bg-gradient-to-b from-[#2e026d] to-[black]";
+                        }
+                      }
+                    }}
+                  >
                     <td>
                       {
                         <Link
@@ -168,7 +195,6 @@ const CoinData = ({
     sellAt: tradeData?.sellAt || 0,
   });
 
-  const [render, setRender] = useState<number>(0);
   const [editMode, setEditMode] = useState<boolean>(false);
   const editWindow = useRef<HTMLDivElement>(null);
   const countInput = useRef<HTMLInputElement>(null);
@@ -205,7 +231,7 @@ const CoinData = ({
 
   const percentages = prices.percentages?.split(";") || ["0"];
 
-  const editModeON = "absolute bg-white z-10";
+  const editModeON = "absolute bg-[#2e026d] border-[3px] z-10";
   const editModeOff = "hidden";
 
   useEffect(() => {
@@ -216,8 +242,7 @@ const CoinData = ({
   }, []);
 
   useEffect(() => {
-    if(updateTradeDataToBd.data){
-
+    if (updateTradeDataToBd.data) {
       setTradeDisplayData({
         name: prices.name,
         count: updateTradeDataToBd.data?.count || 0,
@@ -227,7 +252,6 @@ const CoinData = ({
       });
     }
     console.log("here");
-    
   }, [updateTradeDataToBd.data]);
 
   return (
@@ -242,9 +266,10 @@ const CoinData = ({
           Edit
         </button>
         <div ref={editWindow} className={editMode ? editModeON : editModeOff}>
-          <h1 className="text-black">{prices.name}</h1>
-          <div className="flex flex-col">
-            <label htmlFor="number">Bought for:</label>
+<div className="bg-transparent">
+          <h1 className="text-white text-center">{prices.name}</h1>
+          <div className="flex flex-col items-center">
+            <label>Bought for:</label>
             <input
               ref={boughtForInput}
               type="number"
@@ -255,7 +280,7 @@ const CoinData = ({
                 }
               }}
             />
-            <label htmlFor="count">Count:</label>
+            <label>Count:</label>
             <input
               ref={countInput}
               type="number"
@@ -266,7 +291,7 @@ const CoinData = ({
                 }
               }}
             />
-            <label htmlFor="number">Bought at:</label>
+            <label>Bought at:</label>
             <input
               ref={boughtAtInput}
               type="number"
@@ -277,8 +302,7 @@ const CoinData = ({
                 }
               }}
             />
-
-            <label htmlFor="number">Sell at:</label>
+            <label>Sell at:</label>
             <input
               ref={sellAtInput}
               type="number"
@@ -289,6 +313,7 @@ const CoinData = ({
                 }
               }}
             />
+          </div>
           </div>
         </div>
       </td>

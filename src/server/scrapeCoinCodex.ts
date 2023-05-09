@@ -55,7 +55,7 @@ export const scrapeCoinCodexPRedictions = async (
         map.set("values", values.join(";"));
         map.set("percentages", percentages.join(";"));
       }
-      console.table(map);
+      //console.table(map);
       await browser.close();
       if (map.size > 0) {
         resolve(map);

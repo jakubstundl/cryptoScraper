@@ -28,8 +28,6 @@ export const coinCodexRouter = createTRPCRouter({
     }),
 
   truncate: publicProcedure.input(z.boolean()).mutation(async ({ input }) => {
-    console.log(input);
-
     if (input) {
       try {
         await prisma.$executeRawUnsafe(`TRUNCATE TABLE coinCodexPrediction;`);
@@ -43,15 +41,17 @@ export const coinCodexRouter = createTRPCRouter({
   }),
 
   fillDb: publicProcedure.query(async () => {
-   
-    for (const coin of coinShort()) {    
+    let index = 0;
+    const numberOfCoins = coinShort().length 
+    for (const coin of coinShort()) {   
+      index++;
       try {
         await prisma.coinCodexPrediction.delete ({ where: { name: coin } });
       } catch (error) {
         console.log("No data to delete");        
       }      
       await upsertDbAndReturn(coin);
-      console.log(coin," upsert");      
+      console.log(coin," upsert ", `${index} of ${numberOfCoins}`);      
     }
   }),
   updateTradeData: publicProcedure
