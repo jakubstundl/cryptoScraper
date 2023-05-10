@@ -1,10 +1,4 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable prefer-const */
-
 import * as puppeteer from "puppeteer";
 
 const nameSelector =
@@ -29,7 +23,7 @@ export const scrapeCoinCodexPRedictions = async (
     ] });
     const page: puppeteer.Page = await browser.newPage();
     await page.goto(url);
-    let map = new Map<string, string>();
+    const map = new Map<string, string>();
    
       const name = await getDataFromElement(nameSelector, page);
       if (name) {
@@ -72,7 +66,7 @@ export const scrapeCoinCodexPRedictions = async (
 const getDataFromElement = async (selector: string, page: puppeteer.Page) => {
   const element: puppeteer.ElementHandle<Element> | null =
     await page.waitForSelector(selector);
-  let value: string | undefined | null = await page.evaluate(
+  const value: string | undefined | null = await page.evaluate(
     (el: Element | null) => el?.textContent,
     element
   );
