@@ -8,19 +8,17 @@ datasource db {
 }
 
 model coinCodexPrediction {
-  name   String  @id @unique
-  time   Float?
-  days      String? @db.Text
+  name        String  @id @unique
+  time        Float?
+  days        String? @db.Text
   values      String? @db.Text
-  percentages      String? @db.Text
+  percentages String? @db.Text
 }
 
-
 model coinTradeData {
-  name   String  @id @unique
-  count Float?
+  name      String @id @unique
+  count     Float?
+  sellAt    Float?
+  boughtAt  Float?
   boughtFor Float?
-  boughtAt Float?
-  sellAt Float?
-  
 }

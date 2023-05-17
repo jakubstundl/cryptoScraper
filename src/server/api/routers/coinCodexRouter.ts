@@ -42,48 +42,53 @@ export const coinCodexRouter = createTRPCRouter({
 
   fillDb: publicProcedure.query(async () => {
     let index = 0;
-    const numberOfCoins = coinShort().length 
-    for (const coin of coinShort()) {   
+    const numberOfCoins = coinShort().length;
+    for (const coin of coinShort()) {
       index++;
       try {
-        await prisma.coinCodexPrediction.delete ({ where: { name: coin } });
+        await prisma.coinCodexPrediction.delete({ where: { name: coin } });
       } catch (error) {
-        console.log("No data to delete");        
-      }      
+        console.log("No data to delete");
+      }
       await upsertDbAndReturn(coin);
-      console.log(coin," upsert ", `${index} of ${numberOfCoins}`);      
+      console.log(coin, " upsert ", `${index} of ${numberOfCoins}`);
     }
   }),
   updateTradeData: publicProcedure
-    .input(z.object({ name:z.string(),count:z.number(),
-      boughtFor:z.number(),
-      boughtAt:z.number(),
-      sellAt:z.number(),
-    }))
+    .input(
+      z.object({
+        name: z.string(),
+        count: z.number(),
+        boughtFor: z.number(),
+        boughtAt: z.number(),
+        sellAt: z.number(),
+      })
+    )
     .mutation(async ({ input }) => {
-      
       try {
         await prisma.coinTradeData.upsert({
           where: {
             name: input.name,
           },
-          update: { count:input.count },
+          update: { count: input.count },
           create: {
             name: input.name,
-            count:input.count,
-            boughtFor:input.boughtFor,
-            boughtAt:input.boughtAt,
-            sellAt:input.sellAt
+            count: input.count,
+            boughtFor: input.boughtFor,
+            boughtAt: input.boughtAt,
+            sellAt: input.sellAt,
           },
         });
 
-        await prisma.coinTradeData.update({where:{name:input.name}, data:{
-          count:input.count,
-          boughtFor:input.boughtFor,
-          boughtAt:input.boughtAt,
-          sellAt:input.sellAt
-  
-        }})
+        await prisma.coinTradeData.update({
+          where: { name: input.name },
+          data: {
+            count: input.count,
+            boughtFor: input.boughtFor,
+            boughtAt: input.boughtAt,
+            sellAt: input.sellAt,
+          },
+        });
       } catch (error) {
         console.log("Unable to update trade data");
       }
@@ -91,6 +96,28 @@ export const coinCodexRouter = createTRPCRouter({
         where: { name: input.name },
       });
     }),
+
+  checkDb: publicProcedure.query(async () => {
+    let index = 0;
+    const numberOfCoins = coinShort().length;
+    for (const coin of coinShort()) {
+      index++;
+      try {
+        const dataFromDb = await prisma.coinCodexPrediction.findUnique({
+          where: { name: coin },
+        });
+        if (dataFromDb) {
+          console.log(`${coin} data is ok`);
+        } else {
+          console.log("No data of ", coin);
+          await upsertDbAndReturn(coin);
+          console.log(coin, " upsert ", `${index} of ${numberOfCoins}`);
+        }
+      } catch (error) {
+        console.log("Db unavailable");
+      }
+    }
+  }),
 });
 
 export const upsertDbAndReturn = async (
@@ -163,7 +190,6 @@ const getAvailableCoins = async () => {
     console.log("Couldnt get available coins");
   }
 };
-
 
 const getCoinTradeData = async () => {
   try {
